@@ -22,3 +22,4 @@ while run:
     
     level_1.start_level(screen)
     pygame.display.update()
+pygame.quit()
