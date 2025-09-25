@@ -95,11 +95,11 @@ class Level:
 
         for tile in self.tiles_in_map:
             if tile.rec.colliderect(self.player_obj.current_image_rec):
+                print(self.player_obj.speed.y)
                 # Downward
-                if tile.rec.top <= self.player_obj.current_image_rec.bottom:
+                if self.player_obj.speed.y > 0:
+                    self.player_obj.speed.y = 0
                     self.player_obj.current_image_rec.bottom = tile.rec.top
-                    self.player_obj.pos.y = self.player_obj.current_image_rec.bottomleft[1] - 50
-                    self.player_obj.gravity = 0
 
                 # Upward    
                 elif tile.rec.bottom >= self.player_obj.current_image_rec.top:
@@ -115,13 +115,13 @@ class Level:
             if tile.rec.colliderect(self.player_obj.current_image_rec):
 
                 # Left side collison
-                if self.player_obj.speed < 0:
-                    self.player_obj.speed = 0
+                if self.player_obj.speed.x < 0:
+                    self.player_obj.speed.x = 0
                     self.player_obj.current_image_rec.left = tile.rec.right
 
                 # Right side sollison
-                elif self.player_obj.speed > 0:
-                    self.player_obj.speed = 0
+                elif self.player_obj.speed.x > 0:
+                    self.player_obj.speed.x = 0
                     self.player_obj.current_image_rec.right = tile.rec.left
 
 

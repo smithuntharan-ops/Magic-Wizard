@@ -24,7 +24,7 @@ class Player(pygame.sprite.Sprite):
         # Movement
         self.pos = pygame.math.Vector2(pos[0], pos[1])
         self.init = True
-        self.speed = 3
+        self.speed = pygame.math.Vector2(0, 0)
         self.flip_char = False
         self.gravity = 0
         self.running = False
@@ -45,27 +45,27 @@ class Player(pygame.sprite.Sprite):
         K = pygame.key.get_pressed()
 
         if K[pygame.K_a] and self.current_image_rec.x > 0:
-            if self.speed >= -3:
-                self.speed += 0.1 * -5
-            self.pos.x += self.speed
+            if self.speed.x >= -3:
+                self.speed.x += 0.1 * -5
+            self.pos.x += self.speed.x
             self.running = True
             self.flip_char = True
             self.set_animation('Walk')
 
         elif K[pygame.K_d]:
-            if self.speed <= 3:
-                self.speed += 0.1 * 5
+            if self.speed.x <= 3:
+                self.speed.x += 0.1 * 5
                 self.flip_char = False
-            self.pos.x += self.speed
+            self.pos.x += self.speed.x
             self.running = True 
             self.set_animation('Walk')
         
         else:
-            if abs(self.speed) > 0:
-                if self.speed < 0: self.speed += 0.1 * 5
-                if self.speed > 0: self.speed -= 0.1 * 5
+            if abs(self.speed.x) > 0:
+                if self.speed.x < 0: self.speed.x += 0.1 * 5
+                if self.speed.x > 0: self.speed.x -= 0.1 * 5
             
-            else: self.speed = 0
+            else: self.speed.x = 0
             self.running = False
             self.set_animation('Idle')
     
@@ -102,5 +102,7 @@ class Player(pygame.sprite.Sprite):
 
     def gpull(self):
         if self.gravity < 15:
-            self.gravity += 0.2
-        self.pos.y += self.gravity
+            self.gravity += 2
+
+        self.speed.y = self.gravity
+        self.pos.y += self.speed.y
