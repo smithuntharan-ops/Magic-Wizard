@@ -26,10 +26,11 @@ class Player(pygame.sprite.Sprite):
         self.init = True
         self.speed = pygame.math.Vector2(0, 0)
         self.flip_char = False
-        self.gravity = 0
+        self.gravity = 1
         self.running = False
         self.dash1 = False
         self.dash2 = False
+        self.land = False
 
     def load_images(self):
         
@@ -38,24 +39,24 @@ class Player(pygame.sprite.Sprite):
             for img_name in listdir(path + name):
                 img = pygame.image.load(path + name + '\\' + img_name)
                 img = pygame.transform.scale(img, (64, 64))
-                img = img.subsurface(20, 0, 24, 50)
+                img = img.subsurface(22, 10, 22, 40)
                 self.animationlist_imgs[name].append(img)
 
     def get_keys(self):
         K = pygame.key.get_pressed()
 
         if K[pygame.K_a] and self.current_image_rec.x > 0:
-            if self.speed.x >= -3:
-                self.speed.x += 0.1 * -5
+            if self.speed.x >= -5:
+                self.speed.x += -0.2
             self.pos.x += self.speed.x
             self.running = True
             self.flip_char = True
             self.set_animation('Walk')
 
         elif K[pygame.K_d]:
-            if self.speed.x <= 3:
-                self.speed.x += 0.1 * 5
-                self.flip_char = False
+            if self.speed.x <= 5:
+                self.speed.x += 0.2
+            self.flip_char = False
             self.pos.x += self.speed.x
             self.running = True 
             self.set_animation('Walk')
@@ -89,20 +90,25 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.animation_type = 'Idle'
                 self.animation_index = 0
-
+                
     def draw_images(self, surf):
         self.animate_images()
         self.current_image_rec = self.current_image.get_rect()
         self.current_image_rec.topleft = (self.pos.x, self.pos.y)
         #self.init = False
         
-        #pygame.draw.rect(surf, (255, 255, 255), self.current_image_rec, width = 2)
-        #self.current_image = pygame.transform.flip(self.current_image, self.flip_char, 0)
+        pygame.draw.rect(surf, (255, 255, 255), self.current_image_rec, width = 2)
+        self.current_image = pygame.transform.flip(self.current_image, False if self.flip_char else self.flip_char, 0)
         surf.blit(self.current_image, self.current_image_rec)   
-
-    def gpull(self):
-        if self.gravity < 15:
+    
+    def gpull(self): 
+        
+        if self.land:
+            self.gravity = 0
+        
+        elif self.gravity < 15: # and self.gravity != 0:
             self.gravity += 2
+        
 
         self.speed.y = self.gravity
         self.pos.y += self.speed.y

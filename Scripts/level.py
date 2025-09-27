@@ -59,12 +59,12 @@ class Level:
     
         # Scroll Sides
         # 
-        if self.player_obj.current_image_rec.x > 860 and self.background_rec.x > -960 and self.player_obj.speed > 0:
+        if self.player_obj.current_image_rec.x > 860 and self.background_rec.x > -960 and self.player_obj.speed.x > 0:
             self.player_obj.speed = 0
             self.background_rec.x += 8 
             self.shiftx = 8
 
-        elif self.player_obj.current_image_rec.x < 100 and self.background_rec.x > 0 and self.player_obj.speed > 0:
+        elif self.player_obj.current_image_rec.x < 100 and self.background_rec.x > 0 and self.player_obj.speed.x > 0:
             self.player_obj.speed = 0
             self.background_rec.x -= 8
             self.shiftx = -8
@@ -95,20 +95,19 @@ class Level:
 
         for tile in self.tiles_in_map:
             if tile.rec.colliderect(self.player_obj.current_image_rec):
-                print(self.player_obj.speed.y)
+
                 # Downward
                 if self.player_obj.speed.y > 0:
-                    self.player_obj.speed.y = 0
                     self.player_obj.current_image_rec.bottom = tile.rec.top
-
-                # Upward    
-                elif tile.rec.bottom >= self.player_obj.current_image_rec.top:
-                    self.player_obj.pos.y = tile.rec.y + 32
-                    self.player_obj.gravity = 0
+                    self.player_obj.pos.y = self.player_obj.current_image_rec.y
+                    self.player_obj.land = True
                 
-                else:
-                    self.player_obj.gpull()
-                    
+                # Upward    
+                if self.player_obj.speed.y < 0:
+                    self.player_obj.pos.y = tile.rec.y + 32
+                    self.player_obj.pos.y = self.player_obj.current_image_rec.y 
+        
+        print(self.player_obj.speed.y, self.player_obj.gravity, self.player_obj.land)
 
     def collision_side(self):
         for tile in self.tiles_in_map:
@@ -118,11 +117,13 @@ class Level:
                 if self.player_obj.speed.x < 0:
                     self.player_obj.speed.x = 0
                     self.player_obj.current_image_rec.left = tile.rec.right
+                    self.player_obj.pos.x = self.player_obj.current_image_rec.x
 
                 # Right side sollison
                 elif self.player_obj.speed.x > 0:
                     self.player_obj.speed.x = 0
                     self.player_obj.current_image_rec.right = tile.rec.left
+                    self.player_obj.pos.x = self.player_obj.current_image_rec.x
 
 
     def level_startup(self):
