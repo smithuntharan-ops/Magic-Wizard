@@ -56,7 +56,6 @@ while run:
         if event.type == pygame.QUIT:
             run = False
         
-        # Handle pause menu events
         menu_action = pause_menu.handle_event(event)
         
         if menu_action == 'restart':
@@ -69,7 +68,6 @@ while run:
     
     screen.fill((0, 0, 0))
     
-    # Normal gameplay
     if not pause_menu.is_paused:
         result = level_1.start_level(screen)
         
