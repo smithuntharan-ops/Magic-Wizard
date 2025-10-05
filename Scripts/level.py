@@ -186,7 +186,7 @@ class Level:
         
         # Draw invulnerability indicator
         if self.respawn_invulnerability > 0:
-            # Flashing effect
+
             if self.respawn_invulnerability % 10 < 5:
                 shield_surf = pygame.Surface((self.player_obj.current_image_rec.width + 4, 
                                              self.player_obj.current_image_rec.height + 4), 
@@ -195,7 +195,7 @@ class Level:
                 surf.blit(shield_surf, (self.player_obj.current_image_rec.x - 2, 
                                        self.player_obj.current_image_rec.y - 2))
         
-        # Draw player health bar
+       
         health_bar_x = 20
         health_bar_y = 20
         health_bar_width = 200
