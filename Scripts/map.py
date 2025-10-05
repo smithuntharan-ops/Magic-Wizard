@@ -28,7 +28,8 @@ world_data = {
    '6' : 'toptile',
    '7' : 'water', 
    '8' : 'waterdown',
-   '9' : 'yplayer'
+   '9' : 'yplayer',
+   '10' : 'yyenemy'
 }
 
 current_tile_selected = 'dirt'
