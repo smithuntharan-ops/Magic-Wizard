@@ -74,12 +74,11 @@ class Level:
                                 
                                 if new_block.is_solid:
                                     self.solid_tiles.append(new_block)
-                                elif new_block.name == 'door':
+                                elif new_block.name == 'yyydoor':
                                     self.door_tiles.append(new_block)
                                 else:
                                     self.hazard_tiles.append(new_block)
-                            else:
-                                print(f"Warning: Unknown tile ID '{tile_id}' at ({x},{y}) in Level {level}. Ignoring.")
+                            
         
         if self.player_obj is None:
             self.player_obj = Player([100, 100])
@@ -320,6 +319,7 @@ class Level:
         self.check_hazards()
 
         for tile in self.door_tiles:
+            print(tile.pos)
             if self.player_obj.current_image_rec.colliderect(tile.rec):
                 return 'level_complete'
         

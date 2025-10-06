@@ -14,7 +14,7 @@ class Tile(pygame.sprite.Sprite):
         # Define hazard types - fire and water are NOT solid
         self.is_fire = name in ['lava', 'lavadown']
         self.is_water = name in ['water', 'waterdown']
-        self.is_solid = not (self.is_fire or self.is_water)  # Only non-hazard tiles are solid
+        self.is_solid = not (self.is_fire or self.is_water) 
 
     def update(self, xshift):
         self.rec.x += xshift
