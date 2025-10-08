@@ -66,6 +66,10 @@ class Level:
                             self.player_obj.current_image_rec.topleft = (x * 32, y * 32)
                         elif tile_id == '10':
                             self.enemy_manager.add_enemy([x * 32, y * 32], 'slime')
+                        elif tile_id == '11':  # Door tile
+                            new_block = Tile((x * 32, y * 32), 'yyydoor')
+                            self.door_tiles.append(new_block)
+                            self.tiles_in_map.append(new_block)  # Also add to main list for drawing
                         else:
                             if tile_id in self.world_data:
                                 tile_name = self.world_data[tile_id]
@@ -74,15 +78,17 @@ class Level:
                                 
                                 if new_block.is_solid:
                                     self.solid_tiles.append(new_block)
-                                elif new_block.name == 'yyydoor':
-                                    self.door_tiles.append(new_block)
                                 else:
                                     self.hazard_tiles.append(new_block)
-                            
         
         if self.player_obj is None:
             self.player_obj = Player([100, 100])
             self.player_obj.current_image_rec.topleft = (100, 100)
+                                
+            
+            if self.player_obj is None:
+                self.player_obj = Player([100, 100])
+                self.player_obj.current_image_rec.topleft = (100, 100)
 
 
     def find_nearest_safe_block(self):
@@ -203,9 +209,6 @@ class Level:
         for tile in self.tiles_in_map:
             tile.rec.x += self.shiftx
             tile.rec.y += self.shifty
-        for tile in self.door_tiles:
-            tile.rec.x += self.shiftx
-            tile.rec.y += self.shifty
     
     def draw_player(self, surf):
         self.player_obj.draw_images(surf)
@@ -318,8 +321,8 @@ class Level:
         
         self.check_hazards()
 
+        # Check door collision - REMOVE the print statement
         for tile in self.door_tiles:
-            print(tile.pos)
             if self.player_obj.current_image_rec.colliderect(tile.rec):
                 return 'level_complete'
         

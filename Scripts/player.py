@@ -97,7 +97,7 @@ class Player(pygame.sprite.Sprite):
 
         if K[pygame.K_w]:
             if (self.land or self.jump_buffer_counter > 0) and not self.jump_pressed:
-                self.gravity = -18
+                self.gravity = -15
                 self.land = False
                 self.jump_buffer_counter = 0
                 self.set_animation('Jump')
