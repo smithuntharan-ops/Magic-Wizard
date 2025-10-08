@@ -24,8 +24,6 @@ world_data = {
    '1' : 'lava',
    '2' : 'lavadown',
    '3' : 'platform',
-   '4' : 'spike1',
-   '5' : 'spike2',
    '6' : 'toptile',
    '7' : 'water', 
    '8' : 'waterdown',
